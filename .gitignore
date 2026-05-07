@@ -1,0 +1,7 @@
+# Volc Proxy
+
+.env
+logs/
+__pycache__/
+*.pyc
+com.volc.proxy.plist
