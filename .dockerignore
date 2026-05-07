@@ -1,0 +1,7 @@
+__pycache__
+.git
+logs
+.env
+*.plist
+*.plist.example
+README.md

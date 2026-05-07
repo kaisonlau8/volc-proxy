@@ -32,6 +32,39 @@ python3 main.py
 
 默认监听 `http://localhost:8000`。
 
+## Docker 部署
+
+```bash
+# 构建镜像
+docker build -t volc-proxy .
+
+# 运行（通过环境变量传配置）
+docker run -d --name volc-proxy \
+  -p 8000:8000 \
+  -e ARK_API_KEY=你的火山引擎API_KEY \
+  volc-proxy
+
+# 自定义端口和模型
+docker run -d --name volc-proxy \
+  -p 9000:9000 \
+  -e ARK_API_KEY=xxx \
+  -e ARK_PROXY_PORT=9000 \
+  -e ARK_REAL_MODEL=doubao-seed-2-0-pro-260215 \
+  volc-proxy
+
+# 查看日志
+docker logs -f volc-proxy
+
+# 停止 / 重启
+docker stop volc-proxy
+docker restart volc-proxy
+
+# 删除
+docker rm -f volc-proxy
+```
+
+`.env` 文件不会打包进镜像，所有配置通过 `-e` 环境变量传入。
+
 ## 配置
 
 通过 `.env` 文件配置（优先级：`.env` < 环境变量）：
@@ -154,6 +187,8 @@ volc-proxy/
   main.py                      # FastAPI 服务入口
   config.py                    # 配置（从 .env 加载）
   converter.py                 # Anthropic ↔ OpenAI 协议转换
+  Dockerfile                   # Docker 部署
+  .dockerignore                # Docker 构建排除文件
   .env.example                 # 环境变量示例（不含 key）
   com.volc.proxy.plist.example # macOS launchd 配置示例
   .gitignore
