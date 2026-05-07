@@ -446,7 +446,7 @@ async def create_message(request: Request):
     request_model = body.get("model", "opus-4.7")
     stream = body.get("stream", False)
 
-    real_model = MODEL_MAP.get(request_model, request_model)
+    real_model = MODEL_MAP.get(request_model, request_model) or request_model
     msg_count = len(body.get("messages", []))
     first_user = ""
     for msg in body.get("messages", []):
